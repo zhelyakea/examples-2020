@@ -1,18 +1,18 @@
 import { selector, ReadOnlySelectorOptions } from "recoil";
-import { modelState } from "models";
+import { modelState, markerT } from "models";
 
 export const ADD_BUTTON = "ADD_BUTTON";
 export const REMOVE_BUTTON = "REMOVE_BUTTON";
 export const SELECT_BUTTON = "SELECT_BUTTON";
 export const SELECT_BUTTON_COLOR = "select-color";
 
-type buttonSelectorSetT = {
+type buttonT = {
   name?: string;
   color?: string;
   index?: number;
 };
 
-const buttonSelector = selector<buttonSelectorSetT>({
+const buttonSelector = selector<buttonT>({
   key: "markerSelector",
   get: ({ get }) => {
     const { buttons, selectedButtonIndex } = get(modelState);
@@ -25,18 +25,18 @@ const buttonSelector = selector<buttonSelectorSetT>({
   set: ({ set, get }, payload) => {
     const model = get(modelState);
     const buttons = model.buttons;
-    const setMarker = (value: any) => set(modelState, value);
+    const setMarker = (value: markerT) => set(modelState, value);
 
-    const setButtons = (value: any) =>
+    const setButtons = (buttons: buttonT[]) =>
       setMarker({
         ...model,
-        buttons: value,
+        buttons,
       });
 
-    const addButton = (value: any) =>
+    const addButton = (button: buttonT) =>
       setMarker({
         ...model,
-        buttons: [...buttons, value],
+        buttons: [...buttons, button],
       });
 
     const { actionType } = payload;
@@ -53,7 +53,7 @@ const buttonSelector = selector<buttonSelectorSetT>({
         });
       case SELECT_BUTTON_COLOR:
         const newButton = buttons.map(
-          (t: buttonSelectorSetT, i: number): buttonSelectorSetT => {
+          (t: buttonT, i: number): buttonT => {
             if (payload.index === i) {
               return { ...t, index: i, color: payload.color };
             }

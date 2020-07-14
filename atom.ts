@@ -10,8 +10,8 @@ type modelT = {
   name: string;
   selectedMarkerType: "marker" | "neiromarker";
   isPreviewLoaded: boolean;
-  previewImage: any;
-  markerImages: any;
+  previewImage: string;
+  markerImages: string;
   selectedButtonIndex: number;
   buttons: buttonT[];
 };

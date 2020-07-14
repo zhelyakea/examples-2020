@@ -1,10 +1,9 @@
-import React, { ChangeEvent, PropsWithChildren } from "react";
+import React, { ChangeEvent, PropsWithChildren, RefObject } from "react";
 
 type useImageLoadT = {
   image: string;
-  onLoad: (state: any) => void;
+  onLoad: (state: boolean) => void;
   onRemove: () => void;
-  init?: any;
   id: string;
   imageLoadLabelRef: any;
 };
